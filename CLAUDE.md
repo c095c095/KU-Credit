@@ -26,7 +26,7 @@ npx shadcn@latest add @retroui/<name>   # e.g. @retroui/button
 
 The first-run shadcn prompts (component library, preset) are already answered and committed in `components.json`, so subsequent adds skip them.
 
-**No test runner is configured** — there is no test framework, script, or test files in this repo yet.
+**Testing:** the audit engine is covered by **Vitest** (`vitest.config.ts`; tests in `lib/**/*.test.ts`) plus a zero-dep CLI verifier (`scripts/verify-engine.ts`) that runs realistic transcript fixtures through the engine. Scripts: `npm test` / `npm run test:watch`, and `npm run verify`. ⚠️ `vitest`/`tsx` may not be installed: `npm install` fails in this shell with `UNABLE_TO_VERIFY_LEAF_SIGNATURE` (TLS interception) — run `npm i -D vitest tsx` in your own terminal. Until then, run the verifier via the bundled compiler: `npx tsc scripts/verify-engine.ts --outDir .verify-build --module commonjs --moduleResolution node10 --target ES2020 --esModuleInterop --skipLibCheck && node .verify-build/scripts/verify-engine.js`.
 
 ## Architecture
 
@@ -37,19 +37,17 @@ App Router project (`app/`), React Server Components enabled (`rsc: true`). No `
 
 ### Styling: Tailwind v4, CSS-first
 
-There is **no `tailwind.config.js`**. All Tailwind configuration lives in `app/globals.css`:
-- `@import "tailwindcss"` + `@import "shadcn/tailwind.css"` + `tw-animate-css`.
-- Design tokens are CSS custom properties (`oklch`) defined in `:root` and `.dark`, then exposed as Tailwind utilities via the `@theme inline { … }` block.
-- Dark mode is class-based: `@custom-variant dark (&:is(.dark *))` — toggled by a `.dark` class on an ancestor.
-- PostCSS uses `@tailwindcss/postcss` (`postcss.config.mjs`).
+There is **no `tailwind.config.js`** (Tailwind v4, CSS-first). The global stylesheet is **`app/styles/global.css`** (imported by `app/layout.tsx`):
+- `@import "tailwindcss"` + `@import "tw-animate-css"` + `@import "shadcn/tailwind.css"`.
+- It holds the **RetroUI (neubrutalist) theme**: hex tokens in `:root` (e.g. `--primary: #ffdb33`, `--primary-hover`, `--radius: 0`) and a hard offset-shadow scale (`--shadow-*: Npx Npx 0 0 var(--border)`), surfaced to utilities via `@theme inline { … }`.
+- Light-only for now (no `.dark` block). PostCSS uses `@tailwindcss/postcss` (`postcss.config.mjs`).
+- A legacy `app/globals.css` (oklch/Sera theme) may still exist but is **unused** — the layout imports `./styles/global.css`.
 
 ### Fonts
 
-`app/layout.tsx` loads four `next/font/google` families and binds them to CSS variables consumed by the theme:
-- `--font-sans` → Noto Sans (the default body font; `font-sans`)
-- `--font-heading` → Playfair Display (`font-heading`)
-- `--font-geist-mono` → Geist Mono (`font-mono`)
-- `--font-geist-sans` → Geist (loaded but not the active sans)
+`app/layout.tsx` loads two `next/font/google` families (the RetroUI pairing) and binds them to CSS variables on `<body>`:
+- `--font-head` → Archivo Black (`font-head`; RetroUI headings / `Button`)
+- `--font-sans` → Space Grotesk (`font-sans`; default body font)
 
 ### Components: shadcn registry + Base UI
 
@@ -59,4 +57,14 @@ Components are vendored **source you own and edit** (shadcn model), not a depend
 - Use Base UI's **`render` prop** for polymorphism (e.g. `<Button render={<a href="…" />}>`), which is Base UI's equivalent of Radix's `asChild` — there is no `asChild` prop.
 - The icon library is **Lucide** (`lucide-react`), per `components.json`.
 
-RetroUI's `Button` references theme tokens/utilities that are **not defined** in `app/globals.css`: `font-head` (the theme only defines `--font-heading` → `font-heading`), `bg-primary-hover`, and `bg-secondary-hover` (no `--color-*-hover` tokens exist). Add these to the `@theme` block if/when you adopt RetroUI styling fully, or those states (notably the hover background) won't render as intended.
+The RetroUI theme in `app/styles/global.css` defines the tokens its components reference (`--font-head`, `--primary-hover`, the hard-shadow scale, `--radius: 0`), so RetroUI's `Button` renders as intended.
+
+## Domain: degree-audit engine (`lib/`)
+
+KU-Credit computes a student's graduation progress for the CS **2565** curriculum. See `CONTEXT.md` (glossary), `docs/implementation-plan.md`, and `docs/adr/0001-local-first-single-user-mvp.md`. Three layers:
+
+- **`lib/curriculum/`** — static, read-only seed. `types.ts` (Course, Requirement tree, Prerequisite) + `cs-2565.ts` (verified curriculum: 4 core + 20 required with corrected prereqs, ~36 elective options, the Gen-Ed requirement tree, ≥124 total). Never mutated.
+- **`lib/storage/types.ts`** — the mutable `Progress` (Attempts, CustomCourses, manual Assignments, flags). The persistence seam (`ProgressStore`, localStorage) is **not built yet** — types only.
+- **`lib/audit/`** — `engine.ts` exports the **pure** `computeAudit(curriculum, progress, regulation)` (no I/O, fully unit-tested); `grades.ts` (§14.1 scale), `regulation.ts` (graduation rules **verified against ข้อบังคับฯ 2566** — note GPAX counts *every* attempt of a retake, §22.2, not the latest), `report.ts` (CLI formatter), `fixtures.ts` (9 transcripts), `engine.test.ts`.
+
+Rules the engine encodes: per-Requirement credit minimums (incl. nested Gen-Ed groups + Language sub-slots); **manual** Course→Requirement assignment (fixed Core/Required auto-home); GPAX over all graded attempts; soft prereq warnings; a done/honors verdict. The engine is the trusted core — the dashboard UI and localStorage persistence are the remaining work.
