@@ -1,4 +1,8 @@
-@theme {
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@theme inline {
   --font-head: var(--font-head);
   --font-sans: var(--font-sans);
   --radius: var(--radius);
@@ -48,4 +52,13 @@
   --destructive-foreground: #fff;
   --border: #000;
   --input: #fff;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
 }
