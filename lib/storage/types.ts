@@ -36,3 +36,16 @@ export type Progress = {
   assignments: Assignment[];
   flags: { kuExitePassed: boolean };
 };
+
+/**
+ * Persistence seam. localStorage backs it today (LocalStorageProgressStore); a cloud/account
+ * store can implement the same interface later without touching the engine or UI.
+ * getSnapshot/subscribe are synchronous so the UI can bind via React's useSyncExternalStore.
+ */
+export interface ProgressStore {
+  getSnapshot(): Progress;
+  subscribe(listener: () => void): () => void;
+  save(next: Progress): Promise<void>;
+  exportJson(): string;
+  importJson(json: string): Promise<void>;
+}
