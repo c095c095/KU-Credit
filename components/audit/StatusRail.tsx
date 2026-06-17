@@ -74,10 +74,10 @@ export function StatusRail({ audit, gaps, api }: { audit: AuditResult; gaps: Gap
           {gate(v.withinTimeLimit, "8ปี")} {gate(v.kuExitePassed, "EXITE")}
         </div>
 
-        <label className="flex items-center gap-2 text-sm">
+        <label className="flex cursor-pointer items-center gap-2 text-sm">
           <input
             type="checkbox"
-            className="size-4"
+            className="size-4 cursor-pointer accent-primary"
             checked={api.progress.flags.kuExitePassed}
             onChange={(e) => api.setKuExite(e.target.checked)}
           />

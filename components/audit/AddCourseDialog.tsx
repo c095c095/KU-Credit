@@ -8,7 +8,7 @@ import { Text } from "@/components/retroui/Text";
 import { CS_2565, ELECTIVE_CODES } from "@/lib/curriculum/cs-2565";
 import type { Grade } from "@/lib/storage/types";
 import type { useProgress } from "@/hooks/useProgress";
-import { DEFAULT_TERM, GRADE_OPTIONS } from "./options";
+import { DEFAULT_TERM, GRADE_OPTIONS, TERM_OPTIONS } from "./options";
 
 type Api = ReturnType<typeof useProgress>;
 
@@ -100,14 +100,22 @@ export function AddCourseDialog({
           <div className="flex gap-3">
             <label className="flex flex-1 flex-col gap-1 text-sm">
               ภาคเรียน
-              <Input value={term} onChange={(e) => setTerm(e.target.value)} placeholder="2567/1" />
+              <select
+                value={term}
+                onChange={(e) => setTerm(e.target.value)}
+                className="cursor-pointer rounded border-2 border-black bg-background px-2 py-2 text-sm transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              >
+                {TERM_OPTIONS.map((t) => (
+                  <option key={t.value} value={t.value}>{t.label}</option>
+                ))}
+              </select>
             </label>
             <label className="flex flex-col gap-1 text-sm">
               เกรด
               <select
                 value={grade}
                 onChange={(e) => setGrade(e.target.value as Grade)}
-                className="rounded border-2 border-black bg-background px-2 py-2 text-sm"
+                className="cursor-pointer rounded border-2 border-black bg-background px-2 py-2 text-sm transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
               >
                 {GRADE_OPTIONS.map((g) => (
                   <option key={g} value={g}>{g}</option>

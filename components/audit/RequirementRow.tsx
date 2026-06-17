@@ -61,7 +61,11 @@ export function RequirementRow({
 
   return (
     <div className={`rounded border-2 ${status.satisfied ? "border-black/25" : "border-black"} ${nested ? "" : "bg-card"}`}>
-      <button type="button" onClick={onToggle} className="flex w-full items-center gap-3 px-3 py-2 text-left">
+      <button
+        type="button"
+        onClick={onToggle}
+        className={`flex w-full cursor-pointer items-center gap-3 px-3 py-2 text-left transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-primary ${open ? "bg-accent/50" : ""}`}
+      >
         <span aria-hidden className={status.satisfied ? "text-primary" : "text-foreground"}>{icon}</span>
         <Text as={nested ? "p" : "h6"} className="min-w-0 max-w-[45%] shrink truncate">{requirement.nameTh}</Text>
         <div className="hidden min-w-16 flex-1 sm:block">
