@@ -10,6 +10,9 @@ export type Regulation = {
   gpaxCountsAllAttempts: boolean;
   honors: { first: number; second: number };
   requiresKuExite: boolean;
+  /** Do P-graded basic-English courses (01355101/102) count toward the 124-credit total?
+   *  Default true; flip to false if the transcript asterisk is confirmed to mean "not counted". */
+  countPassCoursesToward124: boolean;
 };
 
 export const KU_2566: Regulation = {
@@ -20,4 +23,5 @@ export const KU_2566: Regulation = {
   gpaxCountsAllAttempts: true, // §22.2 + §14.4.1
   honors: { first: 3.5, second: 3.25 }, // §29.1.4
   requiresKuExite: true, // separate KU-EXITE announcement
+  countPassCoursesToward124: true, // basic-English P courses count toward 124 (research-backed default)
 };

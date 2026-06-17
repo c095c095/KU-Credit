@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 1,
+  "curriculumId": "cs-2565",
+  "attempts": [
+    {
+      "id": "1a703c98-da73-4ad2-8b43-ae4dc51a6d02",
+      "courseCode": "01999021",
+      "term": "2567/1",
+      "grade": "C+"
+    },
+    {
+      "courseCode": "01417111",
+      "term": "2567/1",
+      "grade": "F",
+      "id": "043a89a7-70f9-459e-af3d-270ee52a1dcb"
+    },
+    {
+      "courseCode": "01418111",
+      "term": "2567/1",
+      "grade": "F",
+      "id": "a51553bd-c809-4d6e-a650-d18e862995ca"
+    },
+    {
+      "courseCode": "01418112",
+      "term": "2567/1",
+      "grade": "C+",
+      "id": "537cab54-d715-4ba4-8b3d-a4bfa16256ba"
+    },
+    {
+      "courseCode": "01418141",
+      "term": "2567/1",
+      "grade": "C",
+      "id": "9c7473fb-c344-4fd5-988a-5b5d581a740d"
+    },
+    {
+      "courseCode": "01418131",
+      "term": "2567/2",
+      "grade": "D+",
+      "id": "578cb090-8cc3-40a0-8511-d3a833e9ff75"
+    },
+    {
+      "courseCode": "01418113",
+      "term": "2567/2",
+      "grade": "C+",
+      "id": "dbf6e8bd-bebb-4ccb-ba15-40053b5263ea"
+    },
+    {
+      "courseCode": "01418111",
+      "term": "2567/2",
+      "grade": "B",
+      "id": "c4408a30-7d74-46ab-94d9-88504d30bbac"
+    },
+    {
+      "id": "c6b319d1-6a45-4391-8812-b499dfba5117",
+      "courseCode": "01388101",
+      "term": "2567/2",
+      "grade": "B"
+    },
+    {
+      "id": "d0989e2f-6266-4ba7-a4fc-40251129047b",
+      "courseCode": "01177141",
+      "term": "2567/2",
+      "grade": "A"
+    },
+    {
+      "id": "cdb56d71-6238-49fa-8b78-a668073b876e",
+      "courseCode": "01175131",
+      "term": "2567/2",
+      "grade": "B+"
+    },
+    {
+      "id": "c6f3d25f-355f-44ff-84a5-dba705e3358e",
+      "courseCode": "01999111",
+      "term": "2568/1",
+      "grade": "B"
+    },
+    {
+      "id": "74ab01bb-abbd-45a4-b6ed-bd8dcca17c62",
+      "courseCode": "01254101",
+      "term": "2568/1",
+      "grade": "A"
+    },
+    {
+      "id": "dc919fd1-b624-450d-9a0c-5cee766daf09",
+      "courseCode": "01418363",
+      "term": "2568/1",
+      "grade": "C"
+    },
+    {
+      "id": "c316877c-9023-42db-b169-e0da3a02a9b1",
+      "courseCode": "01387102",
+      "term": "2568/1",
+      "grade": "A"
+    },
+    {
+      "courseCode": "01418231",
+      "term": "2568/1",
+      "grade": "D+",
+      "id": "70c0ba67-44eb-4018-9cd6-26b2bab1b5d0"
+    },
+    {
+      "courseCode": "01418211",
+      "term": "2568/1",
+      "grade": "C+",
+      "id": "8e25737c-c1a5-4ac7-bf94-df1a2f980e74"
+    },
+    {
+      "id": "6a8d0cc7-7485-438b-973c-b7e48e1f8178",
+      "courseCode": "01371111",
+      "term": "2568/1",
+      "grade": "F"
+    },
+    {
+      "courseCode": "01418233",
+      "term": "2568/1",
+      "grade": "A",
+      "id": "f2629089-1f16-4679-aaf7-80a1a659d03e"
+    },
+    {
+      "courseCode": "01418236",
+      "term": "2568/2",
+      "grade": "D+",
+      "id": "2ab5f684-c60f-4554-8862-e8751de330cd"
+    },
+    {
+      "id": "2bb19bca-e2fa-478a-b449-02d8f69fd1b3",
+      "courseCode": "01385262",
+      "term": "2568/2",
+      "grade": "A"
+    },
+    {
+      "courseCode": "01418221",
+      "term": "2568/2",
+      "grade": "D+",
+      "id": "daf79427-da8f-4d65-b562-042e608ec251"
+    },
+    {
+      "courseCode": "01417322",
+      "term": "2568/2",
+      "grade": "F",
+      "id": "deb576a0-f313-41ba-8be3-ab8718a95d33"
+    },
+    {
+      "courseCode": "01418132",
+      "term": "2568/2",
+      "grade": "D+",
+      "id": "554c542f-9bcd-4593-a9bc-558b73ad6d89"
+    },
+    {
+      "id": "ec12eb49-8d8f-46e1-b99d-9aeed5c80e98",
+      "courseCode": "01175168",
+      "term": "2568/2",
+      "grade": "B"
+    },
+    {
+      "courseCode": "01418232",
+      "term": "2568/2",
+      "grade": "D+",
+      "id": "44c3944c-b092-42dd-bfd8-fa8274a68874"
+    },
+    {
+      "id": "46a2987f-e9fa-44f4-9d21-8956460c9935",
+      "courseCode": "01355101",
+      "term": "2567/1",
+      "grade": "P"
+    },
+    {
+      "id": "79eaf77f-913c-4888-ac56-8fad0a99d56a",
+      "courseCode": "01355102",
+      "term": "2567/1",
+      "grade": "P"
+    },
+    { "id": "add-w1", "courseCode": "01999111", "term": "2567/1", "grade": "W" },
+    { "id": "add-w2", "courseCode": "01417322", "term": "2567/2", "grade": "W" },
+    { "id": "add-w3", "courseCode": "01418132", "term": "2567/2", "grade": "W" },
+    { "id": "add-i1", "courseCode": "01418364", "term": "2568/2", "grade": "I" }
+  ],
+  "customCourses": [
+    {
+      "code": "01999021",
+      "nameEn": "ภาษาไทยเพื่อการสื่อสารในงานวิชาการ และวิชาชีพ",
+      "credits": 3
+    },
+    {
+      "code": "01388101",
+      "nameEn": "จริยธรรมเพื่อสุนทรียภาพแห่งชีวิต",
+      "credits": 3
+    },
+    {
+      "code": "01177141",
+      "nameEn": "การแสวงหาความรู้",
+      "credits": 3
+    },
+    {
+      "code": "01175131",
+      "nameEn": "ว่ายน้ำเพื่อสุขภาพ",
+      "credits": 1
+    },
+    {
+      "code": "01254101",
+      "nameEn": "สวัสดีซีฟู้ด",
+      "credits": 3
+    },
+    {
+      "code": "01387102",
+      "nameEn": "ปรัชญาสำหรับชีวิตยุคใหม่",
+      "credits": 3
+    },
+    {
+      "code": "01371111",
+      "nameEn": "สื่อสารสนเทศเพื่อการเรียนรู้",
+      "credits": 1
+    },
+    {
+      "code": "01385262",
+      "nameEn": "ดนตรีพื้นเมืองไทยภาคอีสาน",
+      "credits": 3
+    },
+    {
+      "code": "01175168",
+      "nameEn": "การวิ่งเหยาะเพื่อสุขภาพ",
+      "credits": 1
+    },
+    {
+      "code": "01355101",
+      "nameEn": "ภาษาอังกฤษในชีวิตประจำวัน",
+      "credits": 3
+    },
+    {
+      "code": "01355102",
+      "nameEn": "ภาษาอังกฤษในมหาวิทยาลัย",
+      "credits": 3
+    },
+    { "code": "01418364", "nameEn": "Practical Deep Learning", "credits": 3 }
+  ],
+  "assignments": [
+    {
+      "courseCode": "01999021",
+      "requirementId": "gened.language.thai"
+    },
+    {
+      "courseCode": "01388101",
+      "requirementId": "gened.aesthetics"
+    },
+    {
+      "courseCode": "01177141",
+      "requirementId": "gened.entrepreneurship"
+    },
+    {
+      "courseCode": "01175131",
+      "requirementId": "gened.wellness"
+    },
+    {
+      "courseCode": "01999111",
+      "requirementId": "gened.citizen"
+    },
+    {
+      "courseCode": "01254101",
+      "requirementId": "free"
+    },
+    {
+      "courseCode": "01418363",
+      "requirementId": "major.elective"
+    },
+    {
+      "courseCode": "01387102",
+      "requirementId": "gened.aesthetics"
+    },
+    {
+      "courseCode": "01371111",
+      "requirementId": "gened.language.it"
+    },
+    {
+      "courseCode": "01385262",
+      "requirementId": "free"
+    },
+    {
+      "courseCode": "01175168",
+      "requirementId": "gened.wellness"
+    },
+    {
+      "courseCode": "01355101",
+      "requirementId": "free"
+    },
+    {
+      "courseCode": "01355102",
+      "requirementId": "free"
+    },
+    { "courseCode": "01418364", "requirementId": "major.elective" }
+  ],
+  "flags": {
+    "kuExitePassed": true
+  }
+}

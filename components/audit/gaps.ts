@@ -10,7 +10,11 @@ function collectUnsatisfiedLeaves(reqs: RequirementStatus[], out: RequirementSta
 }
 
 /** Build the "what's missing" list (Thai) from an audit — only the unmet items, with the gap. */
-export function deriveGaps(audit: AuditResult, nameTh: (id: string) => string): GapItem[] {
+export function deriveGaps(
+  audit: AuditResult,
+  nameTh: (id: string) => string,
+  courseName: (code: string) => string = (c) => c,
+): GapItem[] {
   const gaps: GapItem[] = [];
 
   const leaves: RequirementStatus[] = [];
@@ -28,6 +32,10 @@ export function deriveGaps(audit: AuditResult, nameTh: (id: string) => string): 
   }
 
   const v = audit.verdict;
+  for (const code of v.failingRequired)
+    gaps.push({ label: courseName(code), detail: "ยังติด F — ต้องเรียนซ้ำให้ผ่าน" });
+  for (const code of v.stuckIncomplete)
+    gaps.push({ label: courseName(code), detail: "เกรด I ค้าง — ต้องแก้ก่อนจบ" });
   if (!v.gpaxOk) gaps.push({ label: "GPAX", detail: "ต่ำกว่า 2.00" });
   if (!v.meetsMinDuration) gaps.push({ label: "ระยะเวลาเรียน", detail: "ยังไม่ครบ 6 ภาคปกติ" });
   if (!v.withinTimeLimit) gaps.push({ label: "ระยะเวลาเรียน", detail: "เกิน 8 ปี" });

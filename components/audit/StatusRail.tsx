@@ -50,6 +50,11 @@ export function StatusRail({ audit, gaps, api }: { audit: AuditResult; gaps: Gap
             </span>
             <span className="shrink-0">GPAX {audit.gpax.toFixed(2)} {v.gpaxOk ? "✓" : "✗"}</span>
           </div>
+          {audit.gpaxCredits > audit.earnedCreditsAF && (
+            <p className="text-right text-xs text-muted-foreground">
+              GPAX จาก {audit.gpaxCredits} นก. (รวม F และวิชาเรียนซ้ำ)
+            </p>
+          )}
         </div>
 
         <div className="rounded border-2 border-black p-3">

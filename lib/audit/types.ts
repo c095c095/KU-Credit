@@ -26,12 +26,17 @@ export type GraduationVerdict = {
   regularSemesters: number;
   overallDone: boolean;
   honors: "first" | "second" | null;
+  failingRequired: string[]; // core/required Course codes sitting at F (not yet passed)
+  stuckIncomplete: string[]; // Course codes with an unresolved I grade
 };
 
 export type AuditResult = {
   requirements: RequirementStatus[];
-  totalCredits: { have: number; need: number; remaining: number };
+  totalCredits: { have: number; need: number; remaining: number }; // have = earnedCredits
   gpax: number;
+  gpaxCredits: number; // GPAX denominator — all A–F attempts incl. F and retakes
+  earnedCredits: number; // unique passed credits toward 124 (A–F passed + P per countPassCoursesToward124)
+  earnedCreditsAF: number; // unique passed via A–F only (excludes P)
   verdict: GraduationVerdict;
   warnings: PrereqWarning[];
   invalidAssignments: Assignment[]; // a Course assigned to a Requirement its rule forbids

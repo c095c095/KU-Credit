@@ -3,7 +3,8 @@
 
 export type Grade =
   | "A" | "B+" | "B" | "C+" | "C" | "D+" | "D" | "F" // graded credit courses (count in GPAX)
-  | "P" | "NP" // pass / not-pass (no GPAX): transfer credits, non-credit internship, 01355111
+  | "W" // withdrawn — no GPAX, no credit (ข้อบังคับ 2566 §10.2)
+  | "P" | "NP" // pass / not-pass (no GPAX): transfer credits, non-credit internship, basic English
   | "I" | "S" | "U" | "N"; // incomplete / audit satisfactory-unsatisfactory / not reported
 
 /** One enrollment of a Course in a term. A Course may have several Attempts (retakes). */

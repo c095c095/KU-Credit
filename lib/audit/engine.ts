@@ -134,11 +134,33 @@ export function computeAudit(
 
   const requirements = curriculum.requirements.map(evalReq);
 
-  // ---- totals ----
-  let totalHave = 0;
-  for (const code of countedCodes) totalHave += creditsOf(code);
+  // ---- credits: earned (progress to 124) is distinct from the GPAX denominator ----
   const need = curriculum.totalCreditsMin;
+  const gpaxCredits = crSum; // §22.2: all A–F attempts incl. F and retakes
+
+  const afPassedCodes = new Set<string>(); // courses passed with an A–D grade
+  for (const [code, list] of attemptsByCourse) {
+    if (list.some((a) => isPassing(a.grade) && a.grade !== "P")) afPassedCodes.add(code);
+  }
+  let earnedCreditsAF = 0;
+  for (const code of afPassedCodes) earnedCreditsAF += creditsOf(code);
+  let passOnlyCredits = 0; // courses passed only via P
+  for (const code of completed) if (!afPassedCodes.has(code)) passOnlyCredits += creditsOf(code);
+  const earnedCredits = earnedCreditsAF + (regulation.countPassCoursesToward124 ? passOnlyCredits : 0);
+
   const unassignedCompleted = [...completed].filter((code) => !countedCodes.has(code));
+
+  // ---- readiness blockers ----
+  const failingRequired: string[] = []; // core/required courses not passed, sitting at F
+  for (const code of fixedMembers) {
+    if (!completed.has(code) && (attemptsByCourse.get(code) ?? []).some((a) => a.grade === "F")) {
+      failingRequired.push(code);
+    }
+  }
+  const stuckIncomplete: string[] = []; // courses with an unresolved I grade
+  for (const [code, list] of attemptsByCourse) {
+    if (!completed.has(code) && list.some((a) => a.grade === "I")) stuckIncomplete.push(code);
+  }
 
   // ---- invalid assignments ----
   const reqById = new Map<string, Requirement>();
@@ -177,7 +199,7 @@ export function computeAudit(
       return s === "1" || s === "2";
     }),
   ).size;
-  const academicComplete = requirements.every((r) => r.satisfied) && totalHave >= need;
+  const academicComplete = requirements.every((r) => r.satisfied) && earnedCredits >= need;
   const gpaxOk = gpax >= regulation.minGpax;
   const meetsMinDuration = regularSemesters >= regulation.minRegularSemesters;
   const withinTimeLimit = regularSemesters <= regulation.maxYears * 2;
@@ -195,7 +217,13 @@ export function computeAudit(
   }
 
   const overallDone =
-    academicComplete && gpaxOk && kuExitePassed && meetsMinDuration && withinTimeLimit;
+    academicComplete &&
+    gpaxOk &&
+    kuExitePassed &&
+    meetsMinDuration &&
+    withinTimeLimit &&
+    failingRequired.length === 0 &&
+    stuckIncomplete.length === 0;
 
   const verdict: GraduationVerdict = {
     academicComplete,
@@ -206,12 +234,17 @@ export function computeAudit(
     regularSemesters,
     overallDone,
     honors,
+    failingRequired,
+    stuckIncomplete,
   };
 
   return {
     requirements,
-    totalCredits: { have: totalHave, need, remaining: Math.max(0, need - totalHave) },
+    totalCredits: { have: earnedCredits, need, remaining: Math.max(0, need - earnedCredits) },
     gpax,
+    gpaxCredits,
+    earnedCredits,
+    earnedCreditsAF,
     verdict,
     warnings,
     invalidAssignments,

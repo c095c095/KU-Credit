@@ -81,6 +81,11 @@ export type Expected = {
   reqSatisfied?: Record<string, boolean>;
   warningsInclude?: string[];
   warningsExclude?: string[];
+  gpaxCredits?: number;
+  earnedCredits?: number;
+  earnedCreditsAF?: number;
+  failingRequiredInclude?: string[];
+  stuckIncompleteInclude?: string[];
 };
 
 export type Fixture = { name: string; description: string; progress: Progress; expect: Expected };
@@ -195,6 +200,44 @@ export const fixtures: Fixture[] = [
     },
     expect: { totalHave: 28, academicComplete: false, overallDone: false },
   },
+  {
+    name: "gpax_rules_F_retake_W_P_I",
+    description:
+      "Every GPAX/credit rule at once: F+retake both count in GPAX; W skipped; P earns credit but skips GPAX; I is stuck; a core course still at F is flagged.",
+    progress: {
+      schemaVersion: 1,
+      curriculumId: "cs-2565",
+      attempts: [
+        at("g1", "01418111", "2567/1", "F"), // required 2cr — F then B (retake)
+        at("g2", "01418111", "2567/2", "B"),
+        at("g3", "01417322", "2567/2", "W"), // core 3cr — W (skip) then F (not passed)
+        at("g4", "01417322", "2568/2", "F"),
+        at("g5", "01418132", "2567/2", "W"), // core 3cr — W (skip) then D+ (passed)
+        at("g6", "01418132", "2568/2", "D+"),
+        at("g7", "01999111", "2567/1", "W"), // gen-ed 2cr — W (skip) then B
+        at("g8", "01999111", "2568/1", "B"),
+        at("g9", "01355101", "2567/1", "P"), // English 3cr — P (earn, no GPAX)
+        at("g10", "01355102", "2567/2", "P"),
+        at("g11", "01418364", "2568/1", "I"), // elective 3cr — stuck I
+      ],
+      customCourses: [
+        { code: "01355101", credits: 3, nameEn: "English for Everyday Life" },
+        { code: "01355102", credits: 3, nameEn: "English for University Life" },
+        { code: "01418364", credits: 3, nameEn: "Selected Topic" },
+      ],
+      assignments: [],
+      flags: { kuExitePassed: false },
+    },
+    expect: {
+      gpax: 1.38, // (0×2 + 3×2 + 0×3 + 1.5×3 + 3×2) / (4 + 3 + 3 + 2) = 16.5 / 12
+      gpaxCredits: 12,
+      earnedCreditsAF: 7, // 01418111(2) + 01418132(3) + 01999111(2)
+      earnedCredits: 13, // + P: 01355101(3) + 01355102(3)
+      failingRequiredInclude: ["01417322"],
+      stuckIncompleteInclude: ["01418364"],
+      overallDone: false,
+    },
+  },
 ];
 
 export function findReq(reqs: RequirementStatus[], id: string): RequirementStatus | undefined {
@@ -216,6 +259,13 @@ export function checkExpected(audit: AuditResult, e: Expected): string[] {
   };
   if (e.totalHave !== undefined) eq("totalHave", audit.totalCredits.have, e.totalHave);
   if (e.gpax !== undefined) eq("gpax", audit.gpax, e.gpax);
+  if (e.gpaxCredits !== undefined) eq("gpaxCredits", audit.gpaxCredits, e.gpaxCredits);
+  if (e.earnedCredits !== undefined) eq("earnedCredits", audit.earnedCredits, e.earnedCredits);
+  if (e.earnedCreditsAF !== undefined) eq("earnedCreditsAF", audit.earnedCreditsAF, e.earnedCreditsAF);
+  for (const code of e.failingRequiredInclude ?? [])
+    if (!audit.verdict.failingRequired.includes(code)) errs.push(`expected failingRequired to include ${code}`);
+  for (const code of e.stuckIncompleteInclude ?? [])
+    if (!audit.verdict.stuckIncomplete.includes(code)) errs.push(`expected stuckIncomplete to include ${code}`);
   if (e.academicComplete !== undefined) eq("academicComplete", audit.verdict.academicComplete, e.academicComplete);
   if (e.gpaxOk !== undefined) eq("gpaxOk", audit.verdict.gpaxOk, e.gpaxOk);
   if (e.overallDone !== undefined) eq("overallDone", audit.verdict.overallDone, e.overallDone);

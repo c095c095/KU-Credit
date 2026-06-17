@@ -25,7 +25,13 @@ const nameThById = (id: string) => NAME_TH.get(id) ?? id;
 export function AuditDashboard() {
   const api = useProgress();
   const audit = useMemo(() => computeAudit(CS_2565, api.progress, KU_2566), [api.progress]);
-  const gaps = useMemo(() => deriveGaps(audit, nameThById), [audit]);
+  const gaps = useMemo(
+    () =>
+      deriveGaps(audit, nameThById, (code) =>
+        CS_2565.courses[code]?.nameTh ?? api.progress.customCourses.find((c) => c.code === code)?.nameEn ?? code,
+      ),
+    [audit, api.progress.customCourses],
+  );
   const warnings = useMemo(
     () => new Map(audit.warnings.map((w) => [w.courseCode, w.unmet] as [string, string[]])),
     [audit],

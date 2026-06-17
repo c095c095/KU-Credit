@@ -167,7 +167,7 @@ const requirements: Requirement[] = [
     nameTh: "วิชาเฉพาะเลือก",
     nameEn: "Major Elective",
     minCredits: 18,
-    rule: { kind: "pattern", pattern: "^014182" },
+    rule: { kind: "pattern", pattern: "^01418[2-9]" },
   },
   {
     id: "free",
