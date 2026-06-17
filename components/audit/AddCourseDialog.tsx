@@ -58,40 +58,40 @@ export function AddCourseDialog({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <Dialog.Trigger render={<Button size="sm" variant="outline">+ Add course</Button>} />
+      <Dialog.Trigger render={<Button size="sm" variant="outline">+ เพิ่มวิชา</Button>} />
       <Dialog.Content size="sm">
         <Dialog.Header>
-          <Text as="h5">Add to {requirementName}</Text>
+          <Text as="h5">เพิ่มวิชาเข้า{requirementName}</Text>
         </Dialog.Header>
 
         <div className="flex flex-col gap-3 p-4">
           <label className="flex flex-col gap-1 text-sm">
-            Course code
+            รหัสวิชา
             <Input
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              placeholder="e.g. 01418362"
+              placeholder="เช่น 01418362"
               list={electiveSuggestions ? "ku-elective-codes" : undefined}
             />
           </label>
           {electiveSuggestions && (
             <datalist id="ku-elective-codes">
               {ELECTIVE_CODES.map((c) => (
-                <option key={c} value={c}>{CS_2565.courses[c]?.nameEn}</option>
+                <option key={c} value={c}>{CS_2565.courses[c]?.nameTh}</option>
               ))}
             </datalist>
           )}
 
           {seeded ? (
-            <Text as="p" className="text-sm text-muted-foreground">{seeded.nameEn} · {seeded.credits} credits</Text>
+            <Text as="p" className="text-sm text-muted-foreground">{seeded.nameTh} · {seeded.credits} นก.</Text>
           ) : (
             <>
               <label className="flex flex-col gap-1 text-sm">
-                Name
-                <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Course name" />
+                ชื่อวิชา
+                <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="ชื่อวิชา" />
               </label>
               <label className="flex flex-col gap-1 text-sm">
-                Credits
+                หน่วยกิต
                 <Input type="number" min={0} value={credits} onChange={(e) => setCredits(e.target.value)} />
               </label>
             </>
@@ -99,11 +99,11 @@ export function AddCourseDialog({
 
           <div className="flex gap-3">
             <label className="flex flex-1 flex-col gap-1 text-sm">
-              Term
+              ภาคเรียน
               <Input value={term} onChange={(e) => setTerm(e.target.value)} placeholder="2567/1" />
             </label>
             <label className="flex flex-col gap-1 text-sm">
-              Grade
+              เกรด
               <select
                 value={grade}
                 onChange={(e) => setGrade(e.target.value as Grade)}
@@ -118,8 +118,8 @@ export function AddCourseDialog({
         </div>
 
         <Dialog.Footer>
-          <Dialog.Close render={<Button size="sm" variant="outline">Cancel</Button>} />
-          <Button size="sm" onClick={submit}>Add</Button>
+          <Dialog.Close render={<Button size="sm" variant="outline">ยกเลิก</Button>} />
+          <Button size="sm" onClick={submit}>เพิ่ม</Button>
         </Dialog.Footer>
       </Dialog.Content>
     </Dialog>

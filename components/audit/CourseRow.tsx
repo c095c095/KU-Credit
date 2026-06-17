@@ -22,46 +22,47 @@ export function CourseRow(props: Props) {
 
   return (
     <div className="border-b border-black/15 py-2 last:border-0">
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
         <span aria-hidden className={passed ? "text-primary" : "text-muted-foreground"}>{passed ? "✓" : "○"}</span>
         <span className="font-mono text-xs text-muted-foreground">{code}</span>
-        <span className="flex-1 text-sm">{name}</span>
-        <span className="shrink-0 text-xs text-muted-foreground">{credits} cr</span>
+        <span className="min-w-0 flex-1 truncate text-sm">{name}</span>
+        <span className="shrink-0 text-xs text-muted-foreground">{credits} นก.</span>
         <button
           type="button"
           onClick={() => props.onAddAttempt(DEFAULT_TERM, "B")}
           className="shrink-0 rounded border-2 border-black px-2 text-xs"
         >
-          + attempt
+          + เพิ่ม
         </button>
         {props.onRemoveCourse && (
-          <button type="button" onClick={props.onRemoveCourse} className="shrink-0 px-1 text-destructive" title="Remove course">
+          <button type="button" onClick={props.onRemoveCourse} className="shrink-0 px-1 text-destructive" title="ลบวิชา">
             ✕
           </button>
         )}
       </div>
 
-      {warning?.length ? <p className="pl-6 pt-1 text-xs text-destructive">⚠ prereq: {warning.join("; ")}</p> : null}
+      {warning?.length ? <p className="pl-6 pt-1 text-xs text-destructive">⚠ ต้องเรียน {warning.join("; ")} ก่อน</p> : null}
 
       {attempts.map((a) => (
-        <div key={a.id} className="flex items-center gap-2 pl-6 pt-1">
+        <div key={a.id} className="flex flex-wrap items-center gap-2 pl-6 pt-1">
           <input
             value={a.term}
             onChange={(e) => props.onUpdateAttempt(a.id, { term: e.target.value })}
-            className={`${ctrl} w-20`}
-            aria-label={`${code} term`}
+            className={`${ctrl} w-24`}
+            placeholder="ภาคเรียน"
+            aria-label={`${code} ภาคเรียน`}
           />
           <select
             value={a.grade}
             onChange={(e) => props.onUpdateAttempt(a.id, { grade: e.target.value as Grade })}
             className={ctrl}
-            aria-label={`${code} grade`}
+            aria-label={`${code} เกรด`}
           >
             {GRADE_OPTIONS.map((g) => (
               <option key={g} value={g}>{g}</option>
             ))}
           </select>
-          <button type="button" onClick={() => props.onRemoveAttempt(a.id)} className="px-1 text-destructive" title="Remove attempt">
+          <button type="button" onClick={() => props.onRemoveAttempt(a.id)} className="px-1 text-destructive" title="ลบครั้งนี้">
             ✕
           </button>
         </div>
